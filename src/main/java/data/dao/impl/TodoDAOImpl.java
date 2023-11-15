@@ -48,8 +48,13 @@ public class TodoDAOImpl implements TodoDAO {
     }
 
     @Override
-    public void deleteTodo(Long number) {
-        Todo todo = todoRepository.getById(number);
-        todoRepository.delete(todo);
+    public void deleteTodo(Long number) throws Exception{
+        Optional<Todo> selectTodo = todoRepository.findById(number);
+        if (selectTodo.isPresent()){
+            Todo todo = todoRepository.getById(number);
+            todoRepository.delete(todo);
+        }else{
+            throw new Exception();
+        }
     }
 }

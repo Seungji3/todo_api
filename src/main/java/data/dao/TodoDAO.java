@@ -11,7 +11,7 @@ public interface TodoDAO{
 
     Todo selectTodo(Long number);
 
-    void deleteTodo(Long number);
+    void deleteTodo(Long number) throws Exception;
 
 
 }
