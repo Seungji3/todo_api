@@ -1,8 +1,10 @@
-package data.entity;
+package com.springboot.todo_api.data.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -11,7 +13,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Data
 @Entity
 @Table(name = "Todo")
-public class Todo {
+public class Todo{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +31,9 @@ public class Todo {
     @Column(name = "isDone")
     @ColumnDefault("false")
     private boolean isDone;
+
+    @PostPersist
+    public void setting(){
+        this.sortNum = id;
+    }
 }

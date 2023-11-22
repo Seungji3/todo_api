@@ -1,4 +1,4 @@
-package data.dto;
+package com.springboot.todo_api.data.dto;
 
 import lombok.*;
 

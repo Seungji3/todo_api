@@ -1,8 +1,8 @@
-package data.dao.impl;
+package com.springboot.todo_api.data.dao.impl;
 
-import data.dao.TodoDAO;
-import data.entity.Todo;
-import data.repository.TodoRepository;
+import com.springboot.todo_api.data.entity.Todo;
+import com.springboot.todo_api.data.dao.TodoDAO;
+import com.springboot.todo_api.data.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,12 +20,12 @@ public class TodoDAOImpl implements TodoDAO {
     }
 
     @Override
-    public Todo insertTodo(String title, String content, boolean isdone) {
+    public Todo insertTodo(String title, String content) {
         Todo todo = new Todo();
         todo.setId(todo.getId()); //todo 안넣어도 될수있음
         todo.setTitle(title);
         todo.setContent(content);
-        todo.setDone(isdone);
+        todo.setDone(todo.isDone());
         todo.setSortNum(todo.getId());
 
         return todoRepository.save(todo);
@@ -54,7 +54,7 @@ public class TodoDAOImpl implements TodoDAO {
     }
 
     @Override
-    public void deleteTodo(Long number) throws Exception {
+    public Todo deleteTodo(Long number) throws Exception {
         Optional<Todo> selectTodo = todoRepository.findById(number);
         if (selectTodo.isPresent()) {
             Todo todo = todoRepository.getById(number);
@@ -62,6 +62,7 @@ public class TodoDAOImpl implements TodoDAO {
         } else {
             throw new Exception();
         }
+        return null;
     }
 
     @Override
