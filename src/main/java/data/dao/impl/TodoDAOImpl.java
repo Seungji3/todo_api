@@ -6,6 +6,7 @@ import data.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -19,9 +20,15 @@ public class TodoDAOImpl implements TodoDAO {
     }
 
     @Override
-    public Todo insertTodo(Todo todo) {
-        Todo insertTodo = todoRepository.save(todo);
-        return insertTodo;
+    public Todo insertTodo(String title, String content, boolean isdone) {
+        Todo todo = new Todo();
+        todo.setId(todo.getId()); //todo 안넣어도 될수있음
+        todo.setTitle(title);
+        todo.setContent(content);
+        todo.setDone(isdone);
+        todo.setSortNum(todo.getId());
+
+        return todoRepository.save(todo);
     }
 
     @Override
@@ -43,18 +50,22 @@ public class TodoDAOImpl implements TodoDAO {
 
     @Override
     public Todo selectTodo(Long number) {
-        Todo todo = todoRepository.getById(number);
-        return todo;
+        return todoRepository.getById(number);
     }
 
     @Override
-    public void deleteTodo(Long number) throws Exception{
+    public void deleteTodo(Long number) throws Exception {
         Optional<Todo> selectTodo = todoRepository.findById(number);
-        if (selectTodo.isPresent()){
+        if (selectTodo.isPresent()) {
             Todo todo = todoRepository.getById(number);
             todoRepository.delete(todo);
-        }else{
+        } else {
             throw new Exception();
         }
+    }
+
+    @Override
+    public List<Todo> getAllTodo() {
+        return todoRepository.findAll();
     }
 }
